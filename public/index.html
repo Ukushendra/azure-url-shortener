@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>URL Shortener</title>
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      margin-top: 100px;
+      background-color: #f4f4f4;
+    }
+    input {
+      width: 300px;
+      padding: 10px;
+    }
+    button {
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+    #result {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Azure URL Shortener 🚀</h1>
+
+  <input type="text" id="longUrl" placeholder="Enter long URL" />
+  <button onclick="shortenUrl()">Shorten</button>
+
+  <div id="result"></div>
+
+  <script>
+    async function shortenUrl() {
+      const longUrl = document.getElementById("longUrl").value;
+
+      const response = await fetch("/shorten", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ originalUrl: longUrl })
+      });
+
+      const data = await response.json();
+
+      document.getElementById("result").innerHTML =
+        `<a href="${data.shortUrl}" target="_blank">${data.shortUrl}</a>`;
+    }
+  </script>
+
+</body>
+</html>
